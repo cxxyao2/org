@@ -7,3 +7,15 @@
 To start the front-end app, run `npx nx serve angular16-auth`. Open your browser and navigate to http://localhost:4200/. Happy coding!
 
 To start the back-end api, run `npx  nx serve csharp-api`
+
+## Notes
+
+### CsharpAPI.csproj
+
+- ImplicitUsing: This feature is enabled which tells the compiler to auto generate a set of global using directives bases on the project type, removing the need to include a lot of common usingstatements in each class file.
+
+### build
+
+under the folder in which .csproj file is located, run
+
+> dontnet build
