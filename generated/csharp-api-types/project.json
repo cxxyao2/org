@@ -1,0 +1,44 @@
+{
+  "name": "generated-csharp-api-types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "generated/csharp-api-types/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/generated/csharp-api-types",
+        "main": "generated/csharp-api-types/src/index.ts",
+        "tsConfig": "generated/csharp-api-types/tsconfig.lib.json",
+        "assets": ["generated/csharp-api-types/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "generated/csharp-api-types/**/*.ts",
+          "generated/csharp-api-types/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "generated/csharp-api-types/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["csharp-api-swagger"]
+}

@@ -1,0 +1,47 @@
+{
+  "name": "csharp-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/csharp-api",
+  "targets": {
+    "build": {
+      "executor": "@nx-dotnet/core:build",
+      "outputs": [
+        "{workspaceRoot}/dist/apps/csharp-api",
+        "{workspaceRoot}/dist/intermediates/apps/csharp-api"
+      ],
+      "options": {
+        "configuration": "Debug",
+        "noDependencies": true
+      },
+      "configurations": {
+        "production": {
+          "configuration": "Release"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx-dotnet/core:serve",
+      "options": {
+        "configuration": "Debug"
+      },
+      "configurations": {
+        "production": {
+          "configuration": "Release"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx-dotnet/core:format"
+    },
+    "swagger": {
+      "executor": "@nx-dotnet/core:update-swagger",
+      "outputs": ["options.output"],
+      "options": {
+        "output": "generated/csharp-api-swagger/swagger.json"
+      },
+      "dependsOn": ["build"]
+    }
+  },
+  "tags": []
+}

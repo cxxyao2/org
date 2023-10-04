@@ -11,7 +11,13 @@
           "build",
           "lint",
           "test",
-          "e2e"
+          "e2e",
+          "codegen",
+          "swagger",
+          "codegen",
+          "swagger",
+          "codegen",
+          "swagger"
         ],
         "accessToken": "YWVhM2NlNDYtMjk5NC00MmMwLTk0OWMtZDEyZjE2YjM5Y2FmfHJlYWQtd3JpdGU="
       }
@@ -20,25 +26,21 @@
   "targetDefaults": {
     "build": {
       "dependsOn": [
-        "^build"
+        "^build",
+        "codegen",
+        "^codegen",
+        "codegen",
+        "^codegen",
+        "codegen",
+        "^codegen"
       ],
-      "inputs": [
-        "production",
-        "^production"
-      ]
+      "inputs": ["production", "^production"]
     },
     "test": {
-      "inputs": [
-        "default",
-        "^production",
-        "{workspaceRoot}/jest.preset.js"
-      ]
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
     },
     "e2e": {
-      "inputs": [
-        "default",
-        "^production"
-      ]
+      "inputs": ["default", "^production"]
     },
     "lint": {
       "inputs": [
@@ -50,10 +52,7 @@
     }
   },
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
@@ -80,5 +79,6 @@
     "@nx/angular:component": {
       "style": "css"
     }
-  }
+  },
+  "plugins": ["@nx-dotnet/core"]
 }
