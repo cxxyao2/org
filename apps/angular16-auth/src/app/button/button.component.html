@@ -1,1 +1,38 @@
-<p>button works!</p>
+<mat-toolbar color="primary">Angular Form with Signals</mat-toolbar>
+<div class="container">
+  <mat-form-field>
+    <input
+      #firstNameControl="ngModel"
+      matInput
+      placeholder="First Name"
+      [ngModel]="firstName()"
+      (ngModelChange)="firstName.set($event)"
+      required
+    />
+    <mat-error *ngIf="firstNameControl.hasError('required')">
+      First Name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      #lastNameControl="ngModel"
+      matInput
+      placeholder="Last Name"
+      [ngModel]="lastName()"
+      (ngModelChange)="lastName.set($event)"
+      required
+    />
+    <mat-error *ngIf="firstNameControl.hasError('required')">
+      First Name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Email" [(ngModel)]="email" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Password" [(ngModel)]="password" />
+  </mat-form-field>
+
+  <h3>fullName: {{ fullName() }}</h3>
+  <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+</div>
