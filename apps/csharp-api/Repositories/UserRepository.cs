@@ -51,7 +51,7 @@ public class UserRepository : IUserRepository
     {
         using var connection = _context.CreateConnection();
         var sql = """SELECT * FROM Users WHERE Email = @email""";
-        return await connection.QuerySingleOrDefaultAsync<User>(sql, new { email });
+        return await connection.QueryFirstOrDefaultAsync<User>(sql, new { email });
     }
 
     public async Task<User> GetById(int id)
