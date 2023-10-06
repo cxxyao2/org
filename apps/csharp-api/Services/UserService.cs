@@ -41,9 +41,10 @@ namespace CsharpApi.Services
 
         public async Task Create(CreateRequest model)
         {
-            // validate
-            if (await _userRepository.GetByEmail(model.Email!) != null)
-                throw new AppException($"Email '{model.Email}' is already registered");
+            // validate todo
+            var oldUser = await _userRepository.GetByEmail(model.Email!);
+            // if (await _userRepository.GetByEmail(model.Email!) != null)
+            //     throw new AppException($"Email '{model.Email}' is already registered");
 
             // map model to new user object
             var user = _mapper.Map<User>(model);

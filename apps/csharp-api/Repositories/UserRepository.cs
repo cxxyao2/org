@@ -8,7 +8,7 @@ public interface IUserRepository
     Task<IEnumerable<User>> GetAll();
     Task<User> GetById(int id);
     Task<User> GetByEmail(string email);
-    Task<User> Create(User user);
+    Task Create(User user);
     Task Update(User user);
     Task Delete(int id);
 }
@@ -22,14 +22,15 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public Task<User> Create(User user)
+    public async Task Create(User user)
     {
         using var connection = _context.CreateConnection();
         var sql = """
         INSERT INTO Users (Title, FirstName, LastName, Email, PasswordHash, Role)
         VALUES (@Title, @FirstName, @LastName, @Email, @PasswordHash, @Role)
         """;
-        return connection.QueryFirstOrDefaultAsync<User>(sql, user);
+
+        await connection.ExecuteAsync(sql, user);
     }
 
     public async Task Delete(int id)
@@ -46,21 +47,21 @@ public class UserRepository : IUserRepository
         return await connection.QueryAsync<User>("SELECT * FROM Users");
     }
 
-    public Task<User> GetByEmail(string email)
+    public async Task<User> GetByEmail(string email)
     {
         using var connection = _context.CreateConnection();
-        var sql = """SELECT * FROM Users WHERE Eamil = @email""";
-        return connection.QueryFirstOrDefaultAsync<User>(sql, new { email });
+        var sql = """SELECT * FROM Users WHERE Email = @email""";
+        return await connection.QuerySingleOrDefaultAsync<User>(sql, new { email });
     }
 
-    public Task<User> GetById(int id)
+    public async Task<User> GetById(int id)
     {
         using var connection = _context.CreateConnection();
         var sql = """SELECT * FROM Users WHERE Id = @id""";
-        return connection.QueryFirstOrDefaultAsync<User>(sql, new { id });
+        return await connection.QuerySingleOrDefaultAsync<User>(sql, new { id });
     }
 
-    public Task Update(User user)
+    public async Task Update(User user)
     {
         using var connection = _context.CreateConnection();
         var sql = """
@@ -74,6 +75,6 @@ public class UserRepository : IUserRepository
             Role = @Role
         WHERE Id = @Id
         """;
-        return connection.QueryFirstOrDefaultAsync<User>(sql, user);
+        await connection.ExecuteAsync(sql, user);
     }
 }

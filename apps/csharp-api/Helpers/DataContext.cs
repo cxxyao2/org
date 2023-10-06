@@ -8,7 +8,6 @@ namespace CsharpApi.Helpers
     public class DataContext
     {
         private DbSettings _dbSettings;
-        private IDbConnection _connection;
         public DataContext(IOptions<DbSettings> dbSettings)
         {
             _dbSettings = dbSettings.Value;
@@ -44,12 +43,12 @@ namespace CsharpApi.Helpers
                 var sql = """
                 CREATE TABLE IF NOT EXISTS Users (
                     Id SERIAL PRIMARY KEY,
-                    Title VARCHAR(10),
-                    FirstName VARCHAR(50) NOT NULL,
-                    LastName VARCHAR(50) NOT NULL,
-                    Email VARCHAR(100) NOT NULL UNIQUE,
-                    PasswordHash VARCHAR(100) NOT NULL,
-                    Role INTEGER NOT NULL
+                    Title VARCHAR,
+                    FirstName VARCHAR,
+                    LastName VARCHAR,
+                    Email VARCHAR,
+                    PasswordHash VARCHAR,
+                    Role INTEGER
                 );
                 """;
                 await connection.ExecuteAsync(sql);

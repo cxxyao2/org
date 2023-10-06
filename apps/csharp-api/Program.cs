@@ -1,25 +1,69 @@
+using System.Text.Json.Serialization;
+using CsharpApi.Helpers;
+using CsharpApi.Repositories;
+using CsharpApi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+{
+    var services = builder.Services;
+    var env = builder.Environment;
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+    services.AddCors();
+    services.AddControllers().AddJsonOptions(x =>
+    {
+        // serialize enums as strings in api responses (e.g. Role)
+        x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+        // ignore ommitted properties on models to enable optional params (e.g. User update)
+        x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
+
+    services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+    // configure strongly typed settings object
+    services.Configure<DbSettings>(builder.Configuration.GetSection("DbSettings"));
+
+    // configure DI for application services
+    services.AddSingleton<DataContext>();
+    services.AddScoped<IUserRepository, UserRepository>();
+    services.AddScoped<IUserService, UserService>();
+
+}
+
+
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+
+// ensure database and tables are created
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+
+    using var scope = app.Services.CreateScope();
+    var context = scope.ServiceProvider.GetService<DataContext>();
+    await context!.Init();
 }
 
-app.UseHttpsRedirection();
+// configure HTTP request pipeline
+{
 
-app.UseAuthorization();
+    // global cors policy
+    app.UseCors(x => x
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader());
 
-app.MapControllers();
+    // global error handler
+    app.UseMiddleware<ErrorHandlerMiddleware>();
 
-app.Run();
+    app.MapControllers();
+
+
+}
+
+
+
+
+app.Run("http://localhost:4000");
