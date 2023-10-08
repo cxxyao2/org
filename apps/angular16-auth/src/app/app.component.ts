@@ -1,16 +1,25 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
-import { ButtonComponent } from './button/button.component';
+import { NgIf } from '@angular/common';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
+import { AccountService } from '@app/services';
+import { User } from '@app/models';
+import { AlertComponent } from '@app/components';
 
 @Component({
   standalone: true,
-  imports: [NxWelcomeComponent, RouterModule,ButtonComponent],
+  imports: [NgIf, RouterLink, RouterLinkActive, RouterOutlet, AlertComponent],
   selector: 'org-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'angular16-auth';
+  user?: User | null;
+
+  constructor(private accountService: AccountService) {
+    this.accountService.user.subscribe((x) => (this.user = x));
+  }
+
+  logout() {
+    this.accountService.logout();
+  }
 }

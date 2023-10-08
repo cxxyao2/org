@@ -1,0 +1,50 @@
+<div class="p-4">
+  <div class="container">
+    <h1>{{ title }}</h1>
+    <form *ngIf="!loading" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="mb-3 col">
+          <label for="firstName" class="form-label">First Name</label>
+          <input
+            id="firstName"
+            formControlName="firstName"
+            type="text"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+          />
+          <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+            <div *ngIf="f.firstName.errors.required">
+              First Name is required
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 col">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input
+            id="lastName"
+            formControlName="lastName"
+            type="text"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+          />
+          <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+            <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <button class="btn btn-primary" type="submit" [disabled]="submitting">
+          <span
+            *ngIf="submitting"
+            class="spinner-border spinner-border-sm me-1"
+          ></span>
+          Save
+        </button>
+        <a routerLink="/users" class="btn btn-link"></a>
+      </div>
+    </form>
+    <div class="text-center m-5" *ngIf="loading">
+      <span class="spinner-border spinner-border-lg align-center"></span>
+    </div>
+  </div>
+</div>

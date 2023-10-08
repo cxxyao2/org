@@ -7,6 +7,7 @@
 To start the front-end app, run `npx nx serve angular16-auth`. Open your browser and navigate to http://localhost:4200/. Happy coding!
 
 To start the back-end api, run `npx  nx serve csharp-api`
+To start multiple project, run `nx run-many -t serve -p charp-api angular16-auth`
 
 ## Notes
 
@@ -16,6 +17,18 @@ To start the back-end api, run `npx  nx serve csharp-api`
 
 ### build
 
+#### csharp-api build
+
 under the folder in which .csproj file is located, run
 
 > dontnet build
+
+#### angular build
+
+under org folder, run
+
+> npx nx build angular16-auth
+
+or
+
+> nx run-many -t build -p csharp-api angular16-auth

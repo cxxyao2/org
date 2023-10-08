@@ -35,7 +35,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 
 // ensure database and tables are created
