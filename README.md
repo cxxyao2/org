@@ -37,5 +37,8 @@ under org folder, run
 
 - This is a standalone app.
 - Angular 15 onwared, route could be setup without routing module using Standalone API. Angular added new functions
-  - provideRouter
+  - provideRouter,
+  e.g provideRouter(APP_ROUTES, withPreloading(PreloadAllModules),
+  withDebugTracing())
   - provideAnimations
+
