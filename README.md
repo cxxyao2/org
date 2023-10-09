@@ -29,6 +29,13 @@ under org folder, run
 
 > npx nx build angular16-auth
 
-or
+#### build multiple projects
 
 > nx run-many -t build -p csharp-api angular16-auth
+
+## Angular16-auth
+
+- This is a standalone app.
+- Angular 15 onwared, route could be setup without routing module using Standalone API. Angular added new functions
+  - provideRouter
+  - provideAnimations
