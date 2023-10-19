@@ -11,14 +11,25 @@ import { AppComponent } from './app/app.component';
 
 import { APP_ROUTES } from './app/app.routes';
 
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     provideRouter(APP_ROUTES),
+//     provideHttpClient(
+//       withInterceptors([
+//         jwtInterceptor,
+//         errorInterceptor,
+//         fakeBackendInterceptor,
+//       ])
+//     ),
+//   ],
+// }).catch((err) => console.error(err));
+
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(APP_ROUTES),
     provideHttpClient(
       withInterceptors([
-        jwtInterceptor,
-        errorInterceptor,
-        fakeBackendInterceptor,
+        jwtInterceptor
       ])
     ),
   ],

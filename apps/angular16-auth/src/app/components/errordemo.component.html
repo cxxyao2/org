@@ -1,0 +1,15 @@
+<button (click)="nextUser()">Next User</button>
+<br />
+<ng-container
+  *ngIf="
+    { user: user$ | async, userError: userError$ | async } as vm
+  "
+>
+  <div *ngIf="!vm.userError && vm.user as user; else loading">
+    <p>{{ user }}</p>
+  </div>
+  <div *ngIf="vm.userError as error">
+    <p>{{ error }}</p>
+  </div>
+  <ng-template #loading> <div *ngIf="!vm.userError">loading..</div> </ng-template>
+</ng-container>

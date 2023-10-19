@@ -1,0 +1,16 @@
+<h1>Auth</h1>
+<div>
+  Name:
+  <input [(ngModel)]="user.username" placeholder="name" />
+</div>
+
+<div>
+  Password:
+  <input [(ngModel)]="user.password" placeholder="password" />
+</div>
+
+<div>
+  <button (click)="register()">Register</button>
+  <button (click)="login()">Login</button>
+  <button (click)="getUsername()">GetUsername</button>
+</div>
